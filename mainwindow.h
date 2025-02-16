@@ -18,9 +18,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void newFile();
+    void openFile();
+    void saveFile();
+    void exitApp();
+    void undoAction();
+    void redoAction();
+    void clearDrawing();
+
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene; // Scene for drawing
+    QGraphicsScene *scene;
 };
 
 #endif // MAINWINDOW_H
