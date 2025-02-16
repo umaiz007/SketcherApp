@@ -1,0 +1,19 @@
+# ninja log v6
+10	71	7614078906914296	CMakeFiles/clean.additional	baedbe210acaa455
+20	266	7614086906842001	SketcherApp_autogen/mocs_compilation.cpp	fa2b0464acad061c
+1207	4159	7614078921592405	CMakeFiles/SketcherApp.dir/main.cpp.obj	bd080708c16106ab
+72	98	7614078907525953	clean	577b940aee94fbd7
+20	266	7614086906842001	SketcherApp_autogen/timestamp	fa2b0464acad061c
+20	266	7614086906842001	E:/Projects/SketcherApp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/SketcherApp_autogen/timestamp	fa2b0464acad061c
+1198	4154	7614078921510307	CMakeFiles/SketcherApp.dir/SketcherApp_autogen/mocs_compilation.cpp.obj	d2b34826037b7069
+20	266	7614086906842001	E:/Projects/SketcherApp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/SketcherApp_autogen/mocs_compilation.cpp	fa2b0464acad061c
+267	3708	7614086909309946	CMakeFiles/SketcherApp.dir/mainwindow.cpp.obj	33ac9dd3a476a55d
+3708	4390	7614086943723911	SketcherApp.exe	d2494245208ef07a
+17	1268	7614089968358153	SketcherApp_autogen/timestamp	fa2b0464acad061c
+17	1268	7614089968358153	SketcherApp_autogen/mocs_compilation.cpp	fa2b0464acad061c
+17	1268	7614089968358153	E:/Projects/SketcherApp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/SketcherApp_autogen/timestamp	fa2b0464acad061c
+17	1268	7614089968358153	E:/Projects/SketcherApp/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/SketcherApp_autogen/mocs_compilation.cpp	fa2b0464acad061c
+1270	4560	7614089969643324	CMakeFiles/SketcherApp.dir/SketcherApp_autogen/mocs_compilation.cpp.obj	d2b34826037b7069
+1281	4593	7614089969753030	CMakeFiles/SketcherApp.dir/main.cpp.obj	bd080708c16106ab
+1296	4789	7614089969902645	CMakeFiles/SketcherApp.dir/mainwindow.cpp.obj	33ac9dd3a476a55d
+4789	5192	7614090004834430	SketcherApp.exe	d2494245208ef07a

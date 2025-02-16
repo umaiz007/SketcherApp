@@ -1,0 +1,22 @@
+^E:\PROJECTS\SKETCHERAPP\BUILD\CMAKEFILES\984A6993335926B55784DBF742E00CD2\AUTOUIC_(CONFIG).STAMP.RULE
+setlocal
+cd E:\Projects\SketcherApp\build
+if %errorlevel% neq 0 goto :cmEnd
+E:
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^E:\PROJECTS\SKETCHERAPP\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/Projects/SketcherApp -BE:/Projects/SketcherApp/build --check-stamp-file E:/Projects/SketcherApp/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
