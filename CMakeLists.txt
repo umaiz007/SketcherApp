@@ -9,7 +9,9 @@ qt_add_executable(SketcherApp
     WIN32 MACOSX_BUNDLE
     main.cpp
     mainwindow.cpp
+    drawingscene.cpp  # Add this line
     mainwindow.h
+    drawingscene.h  # Add this line
     mainwindow.ui
 )
 

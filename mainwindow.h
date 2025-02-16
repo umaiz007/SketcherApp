@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QGraphicsScene>
+#include "drawingscene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,7 +29,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene;  // No need to delete manually
+    DrawingScene *scene;  // No need to delete manually
 };
 
 #endif // MAINWINDOW_H

@@ -6,7 +6,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , scene(new QGraphicsScene(this)) // Initialize the scene
+    , scene(new DrawingScene(this))
 {
     ui->setupUi(this);
 
