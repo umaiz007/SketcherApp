@@ -25,8 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete scene;
-    delete ui;
+    delete ui; // No need to delete scene
 }
 
 // Menu Actions
@@ -58,11 +57,13 @@ void MainWindow::exitApp()
 
 void MainWindow::undoAction()
 {
+    // Placeholder for actual undo functionality
     QMessageBox::information(this, "Undo", "Undo action triggered!");
 }
 
 void MainWindow::redoAction()
 {
+    // Placeholder for actual redo functionality
     QMessageBox::information(this, "Redo", "Redo action triggered!");
 }
 

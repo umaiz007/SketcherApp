@@ -20,7 +20,7 @@
     </item>
    </layout>
   </widget>
-  
+
   <!-- Menu Bar -->
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

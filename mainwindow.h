@@ -29,7 +29,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene;
+    QGraphicsScene *scene;  // No need to delete manually
 };
 
 #endif // MAINWINDOW_H
