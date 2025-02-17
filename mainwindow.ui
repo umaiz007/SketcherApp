@@ -31,7 +31,7 @@
      <height>21</height>
     </rect>
    </property>
-   
+
    <!-- File Menu -->
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -53,19 +53,28 @@
     <addaction name="actionClear"/>
    </widget>
 
+   <!-- Draw Menu (New) -->
+   <widget class="QMenu" name="menuDraw">
+    <property name="title">
+     <string>Draw</string>
+    </property>
+    <addaction name="actionLine"/>
+   </widget>
+
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuDraw"/>
   </widget>
 
   <widget class="QStatusBar" name="statusbar"/>
-  
+
   <!-- Actions -->
   <action name="actionNew">
    <property name="text">
     <string>New</string>
    </property>
   </action>
-  
+
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
@@ -99,6 +108,13 @@
   <action name="actionClear">
    <property name="text">
     <string>Clear</string>
+   </property>
+  </action>
+
+  <!-- New Action for Line Drawing -->
+  <action name="actionLine">
+   <property name="text">
+    <string>Draw Line</string>
    </property>
   </action>
 

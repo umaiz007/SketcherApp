@@ -26,10 +26,18 @@ private slots:
     void undoAction();
     void redoAction();
     void clearDrawing();
+    void enableLineDrawing(); // Declare the enableLineDrawing slot
 
 private:
     Ui::MainWindow *ui;
     DrawingScene *scene;  // No need to delete manually
+
+    enum class DrawingMode {
+        None,
+        Line
+    };
+
+    DrawingMode currentDrawingMode = DrawingMode::None; // Declare the currentDrawingMode variable
 };
 
 #endif // MAINWINDOW_H

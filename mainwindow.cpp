@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionUndo, &QAction::triggered, this, &MainWindow::undoAction);
     connect(ui->actionRedo, &QAction::triggered, this, &MainWindow::redoAction);
     connect(ui->actionClear, &QAction::triggered, this, &MainWindow::clearDrawing);
+    connect(ui->actionLine, &QAction::triggered, this, &MainWindow::enableLineDrawing); // Connect the Line action
 }
 
 MainWindow::~MainWindow()
@@ -70,4 +71,10 @@ void MainWindow::redoAction()
 void MainWindow::clearDrawing()
 {
     scene->clear();
+}
+
+void MainWindow::enableLineDrawing()
+{
+    // Set the drawing mode to line
+    currentDrawingMode = DrawingMode::Line;
 }
