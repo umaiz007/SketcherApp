@@ -2,20 +2,20 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "drawingscene.h"
+#include <QUndoStack>
 
-QT_BEGIN_NAMESPACE
+class DrawingScene; // Forward declaration
+
 namespace Ui {
 class MainWindow;
 }
-QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -26,18 +26,17 @@ private slots:
     void undoAction();
     void redoAction();
     void clearDrawing();
-    void enableLineDrawing(); // Declare the enableLineDrawing slot
+    void enableLineDrawing();
 
 private:
     Ui::MainWindow *ui;
-    DrawingScene *scene;  // No need to delete manually
-
+    DrawingScene *scene; // Add this line
+    QUndoStack *undoStack;
     enum class DrawingMode {
         None,
         Line
     };
-
-    DrawingMode currentDrawingMode = DrawingMode::None; // Declare the currentDrawingMode variable
+    DrawingMode currentDrawingMode = DrawingMode::None;
 };
 
 #endif // MAINWINDOW_H

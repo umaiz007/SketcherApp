@@ -2,9 +2,9 @@
 #define DRAWINGSCENE_H
 
 #include <QGraphicsScene>
-#include <QGraphicsLineItem>
-#include <QGraphicsSceneMouseEvent>
 #include <QPen>
+#include <QUndoStack>
+#include <QGraphicsLineItem>
 
 class DrawingScene : public QGraphicsScene
 {
@@ -23,6 +23,7 @@ private:
     QPointF startPoint;
     QGraphicsLineItem *currentLine;
     QPen pen;
+    QUndoStack *undoStack;
 };
 
 #endif // DRAWINGSCENE_H
