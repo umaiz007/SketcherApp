@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(SketcherApp LANGUAGES CXX)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Svg)
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Svg SvgWidgets)
 
 qt_standard_project_setup()
 
@@ -9,18 +9,19 @@ qt_add_executable(SketcherApp
     WIN32 MACOSX_BUNDLE
     main.cpp
     mainwindow.cpp
-    drawingscene.cpp  # Add this line
+    drawingscene.cpp
     mainwindow.h
-    drawingscene.h  # Add this line
+    drawingscene.h
     mainwindow.ui
 )
 
 target_link_libraries(SketcherApp
     PRIVATE
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
-        Qt::Svg
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets
+        Qt6::Svg
+        Qt6::SvgWidgets
 )
 
 include(GNUInstallDirs)

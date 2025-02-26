@@ -5,9 +5,15 @@
 #include <QMessageBox>
 #include <QUndoStack>
 #include <QSvgGenerator>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QGraphicsSvgItem>
+#include <QSvgRenderer>
+#include <QImageReader>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new DrawingScene(this)), undoStack(new QUndoStack(this)) {
+    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new DrawingScene(this)), undoStack(new QUndoStack(this)), pen(Qt::black) { // Initialize pen
     ui->setupUi(this);
 
     ui->graphicsView->setScene(scene);
@@ -33,14 +39,75 @@ void MainWindow::newFile() {
 }
 
 void MainWindow::openFile() {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "JSON Files (*.json);;SVG Files (*.svg)");
+    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "JSON Files (*.json);;SVG Files (*.svg);;Image Files (*.png *.jpg *.jpeg)");
     if (!fileName.isEmpty()) {
-        QMessageBox::information(this, "Open File", "File Opened: " + fileName);
+        if (fileName.endsWith(".json", Qt::CaseInsensitive)) {
+            // Load JSON file
+            QFile file(fileName);
+            if (!file.open(QIODevice::ReadOnly)) {
+                QMessageBox::warning(this, "Open File", "Failed to open file.");
+                return;
+            }
+            QByteArray data = file.readAll();
+            file.close();
+
+            QJsonDocument doc = QJsonDocument::fromJson(data);
+            if (doc.isNull()) {
+                QMessageBox::warning(this, "Open File", "Invalid JSON file.");
+                return;
+            }
+
+            scene->clear();
+            undoStack->clear();
+
+            QJsonArray shapesArray = doc.array();
+            for (const QJsonValue &value : shapesArray) {
+                QJsonObject shapeObj = value.toObject();
+                QString type = shapeObj["type"].toString();
+                if (type == "line") {
+                    QLineF line(QPointF(shapeObj["x1"].toDouble(), shapeObj["y1"].toDouble()),
+                                QPointF(shapeObj["x2"].toDouble(), shapeObj["y2"].toDouble()));
+                    scene->addLine(line, pen);
+                } else if (type == "circle") {
+                    QRectF rect(QPointF(shapeObj["x"].toDouble(), shapeObj["y"].toDouble()),
+                                QSizeF(shapeObj["width"].toDouble(), shapeObj["height"].toDouble()));
+                    scene->addEllipse(rect, pen);
+                }
+            }
+            QMessageBox::information(this, "Open File", "File Opened: " + fileName);
+        } else if (fileName.endsWith(".svg", Qt::CaseInsensitive)) {
+            // Load SVG file
+            QGraphicsSvgItem *svgItem = new QGraphicsSvgItem(fileName);
+            if (svgItem->renderer()->isValid()) {
+                scene->clear();
+                undoStack->clear();
+                scene->addItem(svgItem);
+                QMessageBox::information(this, "Open File", "File Opened: " + fileName);
+            } else {
+                delete svgItem;
+                QMessageBox::warning(this, "Open File", "Invalid SVG file.");
+            }
+        } else if (fileName.endsWith(".png", Qt::CaseInsensitive) || fileName.endsWith(".jpg", Qt::CaseInsensitive) || fileName.endsWith(".jpeg", Qt::CaseInsensitive)) {
+            // Load PNG or JPG file
+            QImage image(fileName);
+            if (image.isNull()) {
+                QMessageBox::warning(this, "Open File", "Invalid image file.");
+                return;
+            }
+
+            scene->clear();
+            undoStack->clear();
+
+            QGraphicsPixmapItem *pixmapItem = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+            scene->addItem(pixmapItem);
+            QMessageBox::information(this, "Open File", "File Opened: " + fileName);
+        } else {
+            QMessageBox::warning(this, "Open File", "Unsupported file format.");
+        }
     }
 }
 
-void MainWindow::saveFile()
-{
+void MainWindow::saveFile() {
     QString fileName = QFileDialog::getSaveFileName(
         this, "Save File", "", "PNG Files (*.png);;JPEG Files (*.jpg);;SVG Files (*.svg);;All Files (*)");
 

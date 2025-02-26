@@ -3,6 +3,12 @@
 
 #include <QMainWindow>
 #include <QUndoStack>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QSvgRenderer>
+#include <QPen> // Add this line
 
 class DrawingScene;
 
@@ -32,6 +38,7 @@ private:
     Ui::MainWindow *ui;
     DrawingScene *scene;
     QUndoStack *undoStack;
+    QPen pen; // Add this line
 };
 
 #endif // MAINWINDOW_H
