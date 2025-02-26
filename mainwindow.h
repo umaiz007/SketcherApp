@@ -4,14 +4,13 @@
 #include <QMainWindow>
 #include <QUndoStack>
 
-class DrawingScene; // Forward declaration
+class DrawingScene;
 
 namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -27,16 +26,12 @@ private slots:
     void redoAction();
     void clearDrawing();
     void enableLineDrawing();
+    void enableCircleDrawing();
 
 private:
     Ui::MainWindow *ui;
-    DrawingScene *scene; // Add this line
+    DrawingScene *scene;
     QUndoStack *undoStack;
-    enum class DrawingMode {
-        None,
-        Line
-    };
-    DrawingMode currentDrawingMode = DrawingMode::None;
 };
 
 #endif // MAINWINDOW_H

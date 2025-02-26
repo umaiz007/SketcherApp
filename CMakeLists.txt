@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(SketcherApp LANGUAGES CXX)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Svg)
 
 qt_standard_project_setup()
 
@@ -18,7 +18,9 @@ qt_add_executable(SketcherApp
 target_link_libraries(SketcherApp
     PRIVATE
         Qt::Core
+        Qt::Gui
         Qt::Widgets
+        Qt::Svg
 )
 
 include(GNUInstallDirs)

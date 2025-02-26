@@ -4,14 +4,21 @@
 #include <QGraphicsScene>
 #include <QPen>
 #include <QUndoStack>
-#include <QGraphicsLineItem>
+#include <QGraphicsItem>
 
-class DrawingScene : public QGraphicsScene
-{
+class DrawingScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
     explicit DrawingScene(QObject *parent = nullptr);
+
+    enum class DrawingMode {
+        None,
+        Line,
+        Circle
+    };
+
+    void setDrawingMode(DrawingMode mode);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -21,9 +28,10 @@ protected:
 private:
     bool drawing;
     QPointF startPoint;
-    QGraphicsLineItem *currentLine;
+    QGraphicsItem *currentShape;
     QPen pen;
     QUndoStack *undoStack;
+    DrawingMode currentMode = DrawingMode::None;
 };
 
 #endif // DRAWINGSCENE_H

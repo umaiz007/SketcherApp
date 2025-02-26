@@ -4,20 +4,14 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QUndoStack>
-#include <QUndoCommand>
+#include <QSvgGenerator>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-    , scene(new DrawingScene(this)) // Initialize scene
-    , undoStack(new QUndoStack(this))
-{
+    : QMainWindow(parent), ui(new Ui::MainWindow), scene(new DrawingScene(this)), undoStack(new QUndoStack(this)) {
     ui->setupUi(this);
 
-    // Set up the graphics scene in the QGraphicsView
     ui->graphicsView->setScene(scene);
 
-    // Connect menu actions to functions
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFile);
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveFile);
@@ -26,74 +20,80 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionRedo, &QAction::triggered, this, &MainWindow::redoAction);
     connect(ui->actionClear, &QAction::triggered, this, &MainWindow::clearDrawing);
     connect(ui->actionLine, &QAction::triggered, this, &MainWindow::enableLineDrawing);
+    connect(ui->actionCircle, &QAction::triggered, this, &MainWindow::enableCircleDrawing);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui; // No need to delete scene
+MainWindow::~MainWindow() {
+    delete ui;
 }
 
-// Menu Actions
-void MainWindow::newFile()
-{
+void MainWindow::newFile() {
     scene->clear();
-    undoStack->clear(); // Clear the undo stack
+    undoStack->clear();
 }
 
-void MainWindow::openFile()
-{
-    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "Images (*.png *.xpm *.jpg);;All Files (*)");
+void MainWindow::openFile() {
+    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "", "JSON Files (*.json);;SVG Files (*.svg)");
     if (!fileName.isEmpty()) {
-        // Load the image into the scene
-        QPixmap pixmap(fileName);
-        scene->clear();
-        scene->addPixmap(pixmap);
-        undoStack->clear(); // Clear the undo stack
         QMessageBox::information(this, "Open File", "File Opened: " + fileName);
     }
 }
 
 void MainWindow::saveFile()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, "Save File", "", "PNG Files (*.png);;JPEG Files (*.jpg);;All Files (*)");
+    QString fileName = QFileDialog::getSaveFileName(
+        this, "Save File", "", "PNG Files (*.png);;JPEG Files (*.jpg);;SVG Files (*.svg);;All Files (*)");
+
     if (!fileName.isEmpty()) {
-        QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
-        image.fill(Qt::transparent);
+        if (fileName.endsWith(".svg", Qt::CaseInsensitive)) {
+            // Save as SVG
+            QSvgGenerator generator;
+            generator.setFileName(fileName);
+            generator.setSize(scene->sceneRect().size().toSize());
+            generator.setViewBox(scene->sceneRect());
 
-        QPainter painter(&image);
-        scene->render(&painter);
-
-        if (image.save(fileName)) {
+            QPainter painter(&generator);
+            scene->render(&painter);
             QMessageBox::information(this, "Save File", "File Saved: " + fileName);
-        } else {
-            QMessageBox::warning(this, "Save File", "Failed to save file.");
+        }
+        else {
+            // Save as PNG or JPG
+            QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+            image.fill(Qt::transparent);
+
+            QPainter painter(&image);
+            scene->render(&painter);
+
+            if (image.save(fileName)) {
+                QMessageBox::information(this, "Save File", "File Saved: " + fileName);
+            } else {
+                QMessageBox::warning(this, "Save File", "Failed to save file.");
+            }
         }
     }
 }
 
-void MainWindow::exitApp()
-{
+void MainWindow::exitApp() {
     close();
 }
 
-void MainWindow::undoAction()
-{
+void MainWindow::undoAction() {
     undoStack->undo();
 }
 
-void MainWindow::redoAction()
-{
+void MainWindow::redoAction() {
     undoStack->redo();
 }
 
-void MainWindow::clearDrawing()
-{
+void MainWindow::clearDrawing() {
     scene->clear();
-    undoStack->clear(); // Clear the undo stack
+    undoStack->clear();
 }
 
-void MainWindow::enableLineDrawing()
-{
-    // Set the drawing mode to line
-    currentDrawingMode = DrawingMode::Line;
+void MainWindow::enableLineDrawing() {
+    scene->setDrawingMode(DrawingScene::DrawingMode::Line);
+}
+
+void MainWindow::enableCircleDrawing() {
+    scene->setDrawingMode(DrawingScene::DrawingMode::Circle);
 }

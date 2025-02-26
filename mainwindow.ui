@@ -53,12 +53,13 @@
     <addaction name="actionClear"/>
    </widget>
 
-   <!-- Draw Menu (New) -->
+   <!-- Draw Menu -->
    <widget class="QMenu" name="menuDraw">
     <property name="title">
      <string>Draw</string>
     </property>
     <addaction name="actionLine"/>
+    <addaction name="actionCircle"/>
    </widget>
 
    <addaction name="menuFile"/>
@@ -111,10 +112,16 @@
    </property>
   </action>
 
-  <!-- New Action for Line Drawing -->
+  <!-- Actions for Drawing -->
   <action name="actionLine">
    <property name="text">
     <string>Draw Line</string>
+   </property>
+  </action>
+
+  <action name="actionCircle">
+   <property name="text">
+    <string>Draw Circle</string>
    </property>
   </action>
 
